@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; color: #333; }
+        h1 { color: #0891b2; border-bottom: 3px solid #0891b2; padding-bottom: 10px; }
+        h2 { color: #0e7490; margin-top: 30px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th { background-color: #0891b2; color: white; padding: 12px; text-align: left; }
+        td { padding: 10px; border-bottom: 1px solid #e5e7eb; }
+        .info-box { background-color: #f0f9ff; border-left: 4px solid #0891b2; padding: 15px; margin: 15px 0; }
+        .footer { margin-top: 50px; padding-top: 20px; border-top: 2px solid #e5e7eb; text-align: center; color: #6b7280; font-size: 12px; }
+    </style>
+</head>
+<body>
+    <h1>Rapport de Camion</h1>
+    
+    <div class="info-box">
+        <strong>Généré le:</strong> {{ truck.updated_at|date:"d/m/Y H:i" }}<br>
+        <strong>ID Camion:</strong> {{ truck.truck_id }}
+    </div>
+
+    <h2>Informations Générales</h2>
+    <table>
+        <tr><th>Propriété</th><th>Valeur</th></tr>
+        <tr><td>ID Camion</td><td>{{ truck.truck_id }}</td></tr>
+        <tr><td>Plaque d'immatriculation</td><td>{{ truck.license_plate }}</td></tr>
+        <tr><td>Marque</td><td>{{ truck.brand }}</td></tr>
+        <tr><td>Modèle</td><td>{{ truck.model }}</td></tr>
+        <tr><td>Année</td><td>{{ truck.year }}</td></tr>
+        <tr><td>Statut</td><td>{{ truck.is_active|yesno:"Actif,Inactif" }}</td></tr>
+        <tr><td>Propriétaire</td><td>{{ owner_name }}</td></tr>
+        {% if driver_name %}
+        <tr><td>Conducteur</td><td>{{ driver_name }}</td></tr>
+        {% endif %}
+    </table>
+
+    <h2>Spécifications Techniques</h2>
+    <table>
+        <tr><th>Propriété</th><th>Valeur</th></tr>
+        <tr><td>Capacité maximale</td><td>{{ truck.max_capacity_kg }} kg</td></tr>
+        <tr><td>Capacité du réservoir</td><td>{{ truck.fuel_tank_capacity_l }} L</td></tr>
+        <tr><td>Seuil surcharge</td><td>{{ truck.overload_threshold_kg }} kg</td></tr>
+        <tr><td>Seuil vol carburant</td><td>{{ truck.fuel_theft_threshold_l }} L</td></tr>
+        <tr><td>Arrêt anormal</td><td>{{ truck.abnormal_stop_minutes }} min</td></tr>
+        <tr><td>Seuil carburant bas</td><td>{{ truck.low_fuel_threshold_percent }}%</td></tr>
+        <tr><td>Limite vitesse</td><td>{{ truck.speed_limit_kmh }} km/h</td></tr>
+    </table>
+
+    <h2>Paramètres Financiers</h2>
+    <table>
+        <tr><th>Propriété</th><th>Valeur</th></tr>
+        <tr><td>Coût par km</td><td>{{ truck.cost_per_km }} €</td></tr>
+        <tr><td>Coût par litre</td><td>{{ truck.cost_per_liter }} €</td></tr>
+        <tr><td>Revenu par tonne</td><td>{{ truck.revenue_per_ton }} €</td></tr>
+    </table>
+
+    <h2>Équipement ESP32</h2>
+    <table>
+        <tr><th>Propriété</th><th>Valeur</th></tr>
+        <tr><td>ID ESP32</td><td>{{ truck.esp32_device_id|default:"Non configuré" }}</td></tr>
+        <tr><td>Adresse MAC</td><td>{{ truck.esp32_mac_address|default:"Non configuré" }}</td></tr>
+        <tr><td>Version firmware</td><td>{{ truck.firmware_version|default:"N/A" }}</td></tr>
+    </table>
+
+    <div class="footer">
+        <p>TruckManager - Système de Gestion de Flotte</p>
+        <p>Document généré automatiquement</p>
+    </div>
+</body>
+</html>
